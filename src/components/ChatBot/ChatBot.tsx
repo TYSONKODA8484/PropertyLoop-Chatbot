@@ -7,6 +7,10 @@ import { QuickReplies } from './QuickReplies';
 import { ChatInput } from './ChatInput';
 import { RefreshCw } from 'lucide-react'; // Add this at the top
 
+const CHAT_API_URL = import.meta.env.VITE_CHAT_API_URL;
+const RESET_API_URL = import.meta.env.VITE_RESET_API_URL;
+
+
 
 const WELCOME_MESSAGE: Message = {
   id: 'welcome',
@@ -42,7 +46,7 @@ export const ChatBot: React.FC = () => {
       const formData = new FormData();
       formData.append('text', content);
 
-      const res = await fetch('http://localhost:5000/chat', {
+      const res = await fetch(CHAT_API_URL, {
         method: 'POST',
         body: formData,
       });
@@ -86,7 +90,7 @@ export const ChatBot: React.FC = () => {
         formData.append('text', message.trim());
       }
 
-      const res = await fetch('http://localhost:5000/chat', {
+      const res = await fetch(CHAT_API_URL, {
         method: 'POST',
         body: formData,
       });
@@ -121,7 +125,7 @@ export const ChatBot: React.FC = () => {
   };
 
   const handleResetChat = async () => {
-    await fetch('http://localhost:5000/reset', { method: 'POST' });
+    await fetch(RESET_API_URL, { method: 'POST' });
     setMessages([WELCOME_MESSAGE]);
     localStorage.removeItem('chatHistory');
   };
